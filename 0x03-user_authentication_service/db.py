@@ -11,6 +11,7 @@ from user import Base, User
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 
+
 class DB:
     """DataBase class"""
 
@@ -49,7 +50,7 @@ class DB:
             return user
         except NoResultFound:
             raise NoResultFound("User not found")
-        
+
     def update_user(self, user_id: int, **kwargs) -> None:
         """Update a user"""
         user = self.find_user_by(id=user_id)

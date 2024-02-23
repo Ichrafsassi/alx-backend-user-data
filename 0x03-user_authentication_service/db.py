@@ -8,7 +8,8 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
-
+from sqlalchemy.exc import IntegrityError, InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 class DB:
     """DataBase class"""
@@ -47,8 +48,8 @@ class DB:
             user = self._session.query(User).filter_by(**kwargs).one()
             return user
         except NoResultFound:
-            raise ValueError("User not found")
-
+            raise NoResultFound("User not found")
+        
     def update_user(self, user_id: int, **kwargs) -> None:
         """Update a user"""
         user = self.find_user_by(id=user_id)
@@ -60,8 +61,3 @@ class DB:
                 raise ValueError(f"Invalid attribute: {key}")
 
         self._session.commit()
-
-
-if __name__ == "__main__":
-    # test
-    pass
